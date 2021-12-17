@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   currentTrackIdState,
@@ -21,6 +21,7 @@ import {
   VolumeUpIcon,
   SwitchHorizontalIcon,
 } from '@heroicons/react/solid';
+import { debounce } from 'lodash';
 
 function Player() {
   const spotifyApi = useSpotify();
@@ -58,6 +59,13 @@ function Player() {
       debouncedAdjustVolume(volume);
     }
   }, [volume]);
+
+  const debouncedAdjustVolume = useCallback(
+    debounce((volume) => {
+      spotifyApi.setVolume(volume).catch((error) => {});
+    }, 500),
+    []
+  );
 
   const handlePlayPause = () => {
     spotifyApi.getMyCurrentPlaybackState().then((data) => {
