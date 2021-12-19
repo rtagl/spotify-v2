@@ -1,5 +1,5 @@
 import { useSession } from 'next-auth/react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   currentTrackIdState,
@@ -7,7 +7,6 @@ import {
 } from '../atoms/songAtom';
 import useSpotify from '../hooks/useSpotify';
 import useSongInfo from '../hooks/useSongInfo';
-import { useEffect } from 'react/cjs/react.development';
 import {
   HeartIcon,
   VolumeUpIcon as VolumeDownIcon,
